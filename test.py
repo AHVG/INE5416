@@ -2,7 +2,7 @@ import subprocess as sub
 import sys 
   
 question_code = sys.argv[1]
-input_path = 'inputs/' + question_code.split("/")[-1] + '.in' 
+input_path = "/".join(question_code.split("/")[::-1][1:][::-1]) + '/inputs/' + question_code.split("/")[-1] + '.in' 
 with open(input_path, 'r') as input_file: 
      input_data = input_file.read()
   
