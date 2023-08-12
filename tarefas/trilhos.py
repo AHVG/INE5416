@@ -31,12 +31,12 @@ while True:
 
         pilha_de_vagoes = []
         vagao = 1
-        while vagao > numero_vagoes:
+        while vagao <= numero_vagoes:
             pilha_de_vagoes.append(vagao)
             if vagoes[0] == vagao:
                 pilha_de_vagoes.pop()
                 vagoes.pop(0)
-                while vagoes[0] == pilha_de_vagoes[-1]:
+                while len(pilha_de_vagoes) and len(vagoes) and vagoes[0] == pilha_de_vagoes[-1]:
                     pilha_de_vagoes.pop()
                     vagoes.pop(0)
             vagao += 1
