@@ -1,3 +1,4 @@
+import bisect
 caso = 1
 while True:
     pecas = []
@@ -6,14 +7,12 @@ while True:
         break
     for _ in range(N):
         pecas.append(int(input()))
+    pecas.sort()
     print(f"CASE# {caso}:")
     for _ in range(Q):
         peca = int(input())
-        indice = 0
-        if peca in pecas:
-            for p in pecas:
-                if p < peca:
-                    indice += 1
+        indice = bisect.bisect_left(pecas, peca)
+        if indice < len(pecas) and pecas[indice] == peca:
             print(f"{peca} found at {indice + 1}")
         else:
             print(f"{peca} not found")
