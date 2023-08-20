@@ -1,0 +1,1 @@
+print((lambda delta: lambda a,b,c: ((-b + delta(a,b,c)**(1/2))/2*a, (-b - delta(a,b,c)**(1/2))/2*a) if delta(a,b,c) >= 0 else (None, None))(lambda a,b,c: b**2-4*a*c)(*list(map(float, input().split()))))

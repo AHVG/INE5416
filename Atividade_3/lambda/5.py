@@ -1,0 +1,1 @@
+print((lambda a,b,c: a if a >= b and a >= c else (b if b >= c else c))(*list(map(int, input().split()))))

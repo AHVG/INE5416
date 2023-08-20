@@ -1,0 +1,1 @@
+print((lambda n, f: 1 if n <= 2 else f(n-2,f) + f(n-1,f))(int(input()), (lambda n, f: 1 if n <= 2 else f(n-2,f) + f(n-1,f))))

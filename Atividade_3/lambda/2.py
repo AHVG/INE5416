@@ -1,0 +1,1 @@
+print((lambda m: "aprovado" if m >= 6.0 else "reprovado")((lambda a,b,c: (a+b+c)/3.0)(*list(map(float, input().split())))))

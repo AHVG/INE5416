@@ -1,0 +1,2 @@
+# No exemplo abaixo é usado o lambada para filtrar todos os nomes que começam com A recebidos na entrada
+print(list(filter(lambda nome: True if len(nome) and nome.lower()[0] == "a" else False, input().split())))

@@ -1,0 +1,1 @@
+print(((lambda d: lambda x1,y1,z1,x2,y2,z2: (d(x1,x2)+d(y1,y2)+d(z1,z2))**(1/2))(lambda p,q: (p-q)**2))(*list(map(float, input().split()))))
