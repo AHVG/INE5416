@@ -1,2 +1,7 @@
+absoluto :: Int -> Int
+absoluto x | (x >= 0) = x
+           | otherwise = -x
+
 main = do
-    print ["2", "3", "4", "5"]
+    print (absoluto 10)
+    print (absoluto (-10))
