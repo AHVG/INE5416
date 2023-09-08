@@ -24,8 +24,12 @@ minimoElemento :: Arvore -> Int
 minimoElemento Null = limiteSup 
 minimoElemento (No n esq dir) = 
     minimo n (minimo (minimoElemento esq) (minimoElemento dir))
-                               
-main = do putStrLn (show (somaElementos minhaArvore))
-          putStrLn (show (buscaElemento minhaArvore 30))
-          putStrLn (show (buscaElemento minhaArvore 55))
-          putStrLn (show (minimoElemento minhaArvore))
+
+ocorrenciasElemento :: Arvore -> Int -> Int
+ocorrenciasElemento Null _ = 0
+ocorrenciasElemento (No n esq dir) i | (n == i) = 1 + (ocorrenciasElemento (esq) (i)) + (ocorrenciasElemento (dir) (i))
+                                     | otherwise = (ocorrenciasElemento (esq) (i)) + (ocorrenciasElemento (dir) (i))
+
+main = do
+    putStrLn (show (ocorrenciasElemento minhaArvore 12))
+

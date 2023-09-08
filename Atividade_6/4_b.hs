@@ -24,8 +24,11 @@ minimoElemento :: Arvore -> Int
 minimoElemento Null = limiteSup 
 minimoElemento (No n esq dir) = 
     minimo n (minimo (minimoElemento esq) (minimoElemento dir))
-                               
-main = do putStrLn (show (somaElementos minhaArvore))
-          putStrLn (show (buscaElemento minhaArvore 30))
-          putStrLn (show (buscaElemento minhaArvore 55))
-          putStrLn (show (minimoElemento minhaArvore))
+
+maioresQueElemento :: Arvore -> Int -> Int
+maioresQueElemento Null _ = 0
+maioresQueElemento (No n esq dir) i | (n > i) = 1 + (maioresQueElemento (esq) (i)) + (maioresQueElemento (dir) (i))
+                                     | otherwise = (maioresQueElemento (esq) (i)) + (maioresQueElemento (dir) (i))
+
+main = do
+    putStrLn (show (maioresQueElemento minhaArvore 12))

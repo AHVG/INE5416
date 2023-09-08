@@ -24,8 +24,15 @@ minimoElemento :: Arvore -> Int
 minimoElemento Null = limiteSup 
 minimoElemento (No n esq dir) = 
     minimo n (minimo (minimoElemento esq) (minimoElemento dir))
-                               
-main = do putStrLn (show (somaElementos minhaArvore))
-          putStrLn (show (buscaElemento minhaArvore 30))
-          putStrLn (show (buscaElemento minhaArvore 55))
-          putStrLn (show (minimoElemento minhaArvore))
+
+numeroDeElementos :: Arvore -> Int
+numeroDeElementos Null = 0
+numeroDeElementos (No n esq dir) = 1 + (numeroDeElementos (esq)) + (numeroDeElementos (dir))
+
+mediaElementos :: Arvore -> Float
+mediaElementos Null = 0
+mediaElementos raiz = (fromIntegral (somaElementos raiz) :: Float) / (fromIntegral (numeroDeElementos (raiz)) :: Float)
+
+main = do 
+    putStrLn (show (mediaElementos minhaArvore))
+
