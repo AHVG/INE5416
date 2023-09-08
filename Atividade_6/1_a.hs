@@ -17,4 +17,3 @@ main = do
     print (obterAluno 3)
     print (obterAluno 4)
     print (obterAluno (-1))
-
