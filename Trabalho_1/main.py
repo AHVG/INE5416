@@ -1,3 +1,5 @@
+import random
+import copy
 
 
 def eh_solucao(estado):
@@ -24,9 +26,23 @@ def mostrar_estado(estado):
         
 
 def chutar(estado, estado_de_possibilidades):
-    # Retirar o chute do estado_de_possibilidades
-    # retornar novo estado com o chute
-    pass
+    novo_estado = copy.copy(estado)
+    
+    # Obtendo os lugares possíveis para chute
+    lugares_possiveis = []
+    for l, linha in enumerate(estado_de_possibilidades):
+        for c, elemento in enumerate(linha):
+            if elemento:
+                lugares_possiveis.append((l, c))
+    
+    # Escolhendo
+    lugar = random.choice(lugares_possiveis)
+    numero_escolhido = random.choice(estado_de_possibilidades[lugar[0]][lugar[1]])
+    
+    # Retirando e colocando
+    estado_de_possibilidades[lugar[0]][lugar[1]].remove(numero_escolhido)
+    novo_estado[lugar[0]][lugar[1]] = numero_escolhido
+    return novo_estado
 
 
 def calcular_estado_de_possibilidades(estado):
