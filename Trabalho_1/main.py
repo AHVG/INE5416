@@ -2,15 +2,9 @@ import random
 import copy
 
 
-CIMA = 0
-DIREITA = 1
-BAIXO = 2
-ESQUERDA = 3
-
 MAIOR = 2
 MENOR = 1
 NADA = 0
-
 
 
 def fazer_tabuleiro_sinais(resposta):
@@ -47,6 +41,7 @@ resposta = [[9, 8, 6, 3, 5, 4, 2, 7, 1],
             [6, 5, 3, 1, 8, 2, 7, 9, 4],
             [1, 2, 4, 7, 9, 5, 3, 8, 6]]
 sinais = fazer_tabuleiro_sinais(resposta)
+
 
 def eh_solucao(estado):
     for linha in estado:
