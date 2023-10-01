@@ -1,9 +1,20 @@
 import copy
 
+from dataclasses import dataclass
 
-MAIOR = 2
-MENOR = 1
-NADA = 0
+
+NADA, MENOR, MAIOR = 0, 1, 2
+
+
+@dataclass
+class Casa:
+
+    esquerda: int = NADA
+    direita: int = NADA
+    baixo: int = NADA
+    cima: int = NADA
+    maiores: int = 0
+    menores: int = 0
 
 
 def fazer_tabuleiro_sinais(resposta):
@@ -11,48 +22,73 @@ def fazer_tabuleiro_sinais(resposta):
 
     for i, linha in enumerate(resposta):
         for j, elemento in enumerate(linha):
-            sinais_elemento = {"E": NADA, "D": NADA, "B": NADA, "C": NADA, ">": 0, "<": 0}
+            casa = Casa()
             bloco_x = j // 3
             bloco_y = i // 3
             x, y = j, i - 1
             if bloco_x * 3 - 1 < x < (bloco_x + 1) * 3 and bloco_y * 3 - 1 < y < (bloco_y + 1) * 3:
                 if elemento > resposta[y][x]:
-                    sinais_elemento["C"] = MAIOR
-                    sinais_elemento[">"] += 1
+                    casa.cima = MAIOR
                 else:
-                    sinais_elemento["C"] = MENOR
-                    sinais_elemento["<"] += 1
+                    casa.cima = MENOR
 
             x, y = j + 1, i
             if bloco_x * 3 - 1 < x < (bloco_x + 1) * 3 and bloco_y * 3 - 1 < y < (bloco_y + 1) * 3:
                 if elemento > resposta[y][x]:
-                    sinais_elemento["D"] = MAIOR
-                    sinais_elemento[">"] += 1
+                    casa.direita = MAIOR
                 else:
-                    sinais_elemento["D"] = MENOR
-                    sinais_elemento["<"] += 1
+                    casa.direita = MENOR
 
             x, y = j, i + 1
             if bloco_x * 3 - 1 < x < (bloco_x + 1) * 3 and bloco_y * 3 - 1 < y < (bloco_y + 1) * 3:
                 if elemento > resposta[y][x]:
-                    sinais_elemento["B"] = MAIOR
-                    sinais_elemento[">"] += 1
+                    casa.baixo = MAIOR
                 else:
-                    sinais_elemento["B"] = MENOR
-                    sinais_elemento["<"] += 1
+                    casa.baixo = MENOR
             
             x, y = j - 1, i
             if bloco_x * 3 - 1 < x < (bloco_x + 1) * 3 and bloco_y * 3 - 1 < y < (bloco_y + 1) * 3:
                 if elemento > resposta[y][x]:
-                    sinais_elemento["E"] = MAIOR
-                    sinais_elemento[">"] += 1
+                    casa.esquerda = MAIOR
                 else:
-                    sinais_elemento["E"] = MENOR
-                    sinais_elemento["<"] += 1
+                    casa.esquerda = MENOR
     
-            resultado[i][j] = sinais_elemento.copy()
-
+            resultado[i][j] = casa
+    percorrer_sinais(resultado)
     return resultado
+
+
+def percorrer_sinais(sinais):
+    for i, linha in enumerate(sinais):
+        for j, casa in enumerate(linha):
+            casa.maiores = percorrer_sinal(sinais, (j, i), MAIOR)
+            casa.menores = percorrer_sinal(sinais, (j, i), MENOR)
+
+
+def percorrer_sinal(sinais, posicao, sinal):
+    posicoes_visitadas = []
+    posicoes_a_serem_visistadas = [posicao]
+    while len(posicoes_a_serem_visistadas):
+        p = posicoes_a_serem_visistadas.pop(0)
+        posicoes_visitadas.append(p)
+        casa = sinais[p[1]][p[0]]
+        if casa.cima == sinal:
+            aux = (p[0], p[1] - 1)
+            if aux not in posicoes_visitadas:
+                posicoes_a_serem_visistadas.append(aux)
+        if casa.baixo == sinal:
+            aux = (p[0], p[1] + 1)
+            if aux not in posicoes_visitadas:
+                posicoes_a_serem_visistadas.append(aux)
+        if casa.esquerda == sinal:
+            aux = (p[0] - 1, p[1])
+            if aux not in posicoes_visitadas:
+                posicoes_a_serem_visistadas.append(aux)
+        if casa.direita == sinal:
+            aux = (p[0] + 1, p[1])
+            if aux not in posicoes_visitadas:
+                posicoes_a_serem_visistadas.append(aux)
+    return len(set(posicoes_visitadas)) - 1
 
 
 def eh_solucao(estado):
@@ -66,34 +102,34 @@ def eh_solucao(estado):
 def obter_possibilidades(estado, posicao):
     x, y = posicao
     # Maior Menor
-    sinais_elemento = sinais[y][x]
-    maior = 9 - sinais_elemento["<"]
-    menor = sinais_elemento[">"]
-    if sinais_elemento["C"] == MAIOR:
+    casa = sinais[y][x]
+    maior = 9 - casa.menores
+    menor = casa.maiores
+    if casa.cima == MAIOR:
         if estado[y - 1][x] and menor < estado[y - 1][x]:
             menor = estado[y - 1][x]
-    elif sinais_elemento["C"] == MENOR:
+    elif casa.cima == MENOR:
         if estado[y - 1][x] and maior > estado[y - 1][x]:
             maior = estado[y - 1][x]
     
-    if sinais_elemento["D"] == MAIOR:
+    if casa.direita == MAIOR:
         if estado[y][x + 1] and menor < estado[y][x + 1]:
             menor = estado[y][x + 1]
-    elif sinais_elemento["D"] == MENOR:
+    elif casa.direita == MENOR:
         if estado[y][x + 1] and menor > estado[y][x + 1]:
             maior = estado[y][x + 1]
 
-    if sinais_elemento["B"] == MAIOR:
+    if casa.baixo == MAIOR:
         if estado[y + 1][x] and menor < estado[y + 1][x]:
             menor = estado[y + 1][x]
-    elif sinais_elemento["B"] == MENOR:
+    elif casa.baixo == MENOR:
         if estado[y + 1][x] and maior > estado[y + 1][x]:
             maior = estado[y + 1][x]
 
-    if sinais_elemento["E"] == MAIOR:
+    if casa.esquerda == MAIOR:
         if estado[y][x - 1] and menor < estado[y][x - 1]:
             menor = estado[y][x - 1]
-    elif sinais_elemento["E"] == MENOR:
+    elif casa.esquerda == MENOR:
         if estado[y][x - 1] and maior > estado[y][x - 1]:
             maior = estado[y][x - 1]
     possibilidades = [i for i in range(menor + 1, maior + 1)]
@@ -130,11 +166,11 @@ def obter_posicao_mais_restrita(estado):
 
 
 def sem_solucao(estado):
-    posicao = obter_posicao_mais_restrita(estado)
-    if not posicao:
-        return True
+    for i in range(9):
+        for j in range(9):
+            if not len(obter_possibilidades(estado, (j, i))):
+                return True
     return False
-
 
 def mostrar_matriz(matriz):
     print()
@@ -176,8 +212,15 @@ sinais = fazer_tabuleiro_sinais(resposta)
 
 
 def main():
+    import time
+
+    inicio = time.time()
     estado = [[0 for _ in range(9)] for _ in range(9)]
     resolver(estado, 0)
+    tempo = (time.time() - inicio) / 60
+    print("Tempo", tempo)
+    # percorrer_sinais(sinais)
+    # print(sinais)
 
 
 if __name__ == "__main__":
