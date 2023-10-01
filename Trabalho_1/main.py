@@ -7,26 +7,38 @@ NADA = 0
 
 
 def fazer_tabuleiro_sinais(resposta):
-    resultado = [[[] for _ in range(9)] for _ in range(9)]
+    resultado = [[None for _ in range(9)] for _ in range(9)]
 
     for i, linha in enumerate(resposta):
         for j, elemento in enumerate(linha):
-            for d in range(-1, 2, 2):
-                if -1 < j < 9 and -1 < i + d < 9 and i // 3 == (i + d) // 3:
-                    if resposta[i + d][j] > elemento:
-                        resultado[i][j].append(MENOR)
-                    else:
-                        resultado[i][j].append(MAIOR)
+            sinais_elemento = {"E": NADA, "D": NADA, "B": NADA, "C": NADA}
+            x, y = j, i - 1
+            if -1 < x < 9 and -1 < y < 9:
+                if elemento > resposta[y][x]:
+                    sinais_elemento["C"] = MAIOR
                 else:
-                    resultado[i][j].append(NADA)
+                    sinais_elemento["C"] = MENOR
 
-                if -1 < j + d < 9 and -1 < i < 9 and j // 3 == (j + d) // 3:
-                    if resposta[i][j + d] > elemento:
-                        resultado[i][j].append(MENOR)
-                    else:
-                        resultado[i][j].append(MAIOR)
+            x, y = j + 1, i
+            if -1 < x < 9 and -1 < y < 9:
+                if elemento > resposta[y][x]:
+                    sinais_elemento["D"] = MAIOR
                 else:
-                    resultado[i][j].append(NADA)
+                    sinais_elemento["D"] = MENOR
+
+            x, y = j, i + 1
+            if -1 < x < 9 and -1 < y < 9:
+                if elemento > resposta[y][x]:
+                    sinais_elemento["B"] = MAIOR
+                else:
+                    sinais_elemento["B"] = MENOR
+            
+            x, y = j - 1, i
+            if -1 < x < 9 and -1 < y < 9:
+                if elemento > resposta[y][x]:
+                    sinais_elemento["E"] = MAIOR
+                else:
+                    sinais_elemento["E"] = MENOR
 
     return resultado
 
@@ -43,7 +55,7 @@ def obter_possibilidades(estado, posicao):
     possibilidades = [i for i in range(1, 10)]
     x, y = posicao
     # Maior Menor
-    for 
+    
 
     # linha e coluna
     for k in range(9):
