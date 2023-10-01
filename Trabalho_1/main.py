@@ -78,6 +78,7 @@ def percorrer_sinais(sinais):
 
 
 def percorrer_sinal(sinais, posicao, sinal):
+    # TODO: Arrumar o set
     posicoes_visitadas = []
     posicoes_a_serem_visistadas = [posicao]
     while len(posicoes_a_serem_visistadas):
