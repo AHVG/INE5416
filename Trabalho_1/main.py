@@ -52,10 +52,10 @@ def eh_solucao(estado):
     return True
 
 
-def sem_solucao(estado_de_possibilidades):
-    for linha in estado_de_possibilidades:
-        for elemento in linha:
-            if not len(elemento):
+def sem_solucao(estado, estado_de_possibilidades):
+    for i, linha in enumerate(estado_de_possibilidades):
+        for j, elemento in enumerate(linha):
+            if not len(elemento) and not estado[i][j]:
                 return True
     return False
 
@@ -153,11 +153,11 @@ def resolver():
 
     # Algoritmo
     while not eh_solucao(estado):
-        for e in estados:
-            mostrar_matriz(e)
-        mostrar_matriz(estado)
-        mostrar_matriz(estado_de_possibilidades)
-        if sem_solucao(estado_de_possibilidades):
+        # for e in estados:
+        #     mostrar_matriz(e)
+        # mostrar_matriz(estado)
+        # mostrar_matriz(estado_de_possibilidades)
+        if sem_solucao(estado, estado_de_possibilidades):
             estados.pop()
             estados_de_possibilidades.pop()
             estado = estados[-1]
@@ -167,7 +167,8 @@ def resolver():
             estado_de_possibilidades = calcular_estado_de_possibilidades(estado)
             estados.append(estado)
             estados_de_possibilidades.append(estado_de_possibilidades)
-        input()
+        mostrar_matriz(estado)
+        # input()
     
     # Resultado
     mostrar_matriz(estado)
