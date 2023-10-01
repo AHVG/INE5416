@@ -42,6 +42,9 @@ def eh_solucao(estado):
 def obter_possibilidades(estado, posicao):
     possibilidades = [i for i in range(1, 10)]
     x, y = posicao
+    # Maior Menor
+    for 
+
     # linha e coluna
     for k in range(9):
         if k != y and estado[k][x] in possibilidades:
@@ -51,7 +54,10 @@ def obter_possibilidades(estado, posicao):
     # bloco
     for i in range(3):
         for j in range(3):
-            pass
+            linha = y // 3
+            coluna = x // 3
+            if linha != y and coluna != x and estado[linha + i][coluna + j] in possibilidades:
+                possibilidades.remove(estado[linha + i][coluna + j])
     return copy.copy(possibilidades)
 
 
@@ -76,9 +82,6 @@ def mostrar_matriz(matriz):
 
 
 def resolver(estado):
-
-    # if eh_valido(estado):
-    #     return False
 
     if eh_solucao(estado):
         mostrar_matriz(estado)
