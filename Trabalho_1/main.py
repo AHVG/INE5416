@@ -146,8 +146,6 @@ def mostrar_matriz(matriz):
 
 
 def resolver(estado, profundidade):
-    # print(f"Estado da pronfundidade {profundidade}\n")
-    # mostrar_matriz(estado)
 
     if eh_solucao(estado):
         mostrar_matriz(estado)
