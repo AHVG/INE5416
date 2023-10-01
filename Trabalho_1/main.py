@@ -12,8 +12,16 @@ def fazer_tabuleiro_sinais(resposta):
 
     for i, linha in enumerate(resposta):
         for j, elemento in enumerate(linha):
-            for d in range(1, -2, -2):
-                if -1 < j + d < 9 and -1 < i < 9:
+            for d in range(-1, 2, 2):
+                if -1 < j < 9 and -1 < i + d < 9 and i // 3 == (i + d) // 3:
+                    if resposta[i + d][j] > elemento:
+                        resultado[i][j].append(MENOR)
+                    else:
+                        resultado[i][j].append(MAIOR)
+                else:
+                    resultado[i][j].append(NADA)
+
+                if -1 < j + d < 9 and -1 < i < 9 and j // 3 == (j + d) // 3:
                     if resposta[i][j + d] > elemento:
                         resultado[i][j].append(MENOR)
                     else:
@@ -21,13 +29,6 @@ def fazer_tabuleiro_sinais(resposta):
                 else:
                     resultado[i][j].append(NADA)
 
-                if -1 < j < 9 and -1 < i + d < 9:
-                    if resposta[i + d][j] > elemento:
-                        resultado[i][j].append(MENOR)
-                    else:
-                        resultado[i][j].append(MAIOR)
-                else:
-                    resultado[i][j].append(NADA)
     return resultado
 
 
@@ -54,16 +55,18 @@ def eh_solucao(estado):
 def sem_solucao(estado_de_possibilidades):
     for linha in estado_de_possibilidades:
         for elemento in linha:
-            if elemento and not len(elemento):
+            if not len(elemento):
                 return True
     return False
 
 
 def mostrar_matriz(estado):
+    print()
     for linha in estado:
         for elemento in linha:
             print(elemento, end='')
         print()
+    print()
         
 
 def chutar(estado, estado_de_possibilidades):
@@ -83,44 +86,36 @@ def chutar(estado, estado_de_possibilidades):
     # Retirando e colocando
     estado_de_possibilidades[lugar[0]][lugar[1]].remove(numero_escolhido)
     novo_estado[lugar[0]][lugar[1]] = numero_escolhido
-    return novo_estado[:]
+    return copy.copy(novo_estado)
 
 
 def analisar_maior_menor():
-    possibilidades = [[None] * 9] * 9
+    possibilidades = [[None for _ in range(9)] for _ in range(9)]
     for i, linha in enumerate(possibilidades):
         for j, elemento in enumerate(linha):
-            maiores = 0
-            menores = 0
-            for d in range(1, -2, -2):
-                if -1 < j + d < 9 and -1 < i < 9:
-                    if sinais[i][j + d] == MAIOR:
-                        maiores += 1
-                    else:
-                        menores += 1
-                if -1 < j < 9 and -1 < i + d < 9:
-                    if sinais[i + d][j] == MAIOR:
-                        maiores += 1
-                    elif sinais[i + d][j] == MENOR:
-                        menores += 1
+            maiores = sinais[i][j].count(MAIOR)
+            menores = sinais[i][j].count(MENOR)
             possibilidades[i][j] = [i for i in range(menores + 1, 10 - maiores)]
     return copy.copy(possibilidades)
 
 
 def analisar_coluna_linha(estado):
-    possibilidades = [[[i for i in range(1, 10)]] * 9] * 9
+    possibilidades = [[[i for i in range(1, 10)] for _ in range(9)] for _ in range(9)]
     for i, linha in enumerate(estado):
         for j, elemento in enumerate(linha):
+            if elemento:
+                possibilidades[i][j] = []
+                continue
             for k in range(9):
-                if estado[i][k] and k != j and estado[i][k] in possibilidades:
-                    possibilidades.remove(estado[i][k])
-                if estado[k][j] and k != i  and estado[k][j] in possibilidades:
-                    possibilidades.remove(estado[k][j])
+                if estado[i][k] and k != j and estado[i][k] in possibilidades[i][j]:
+                    possibilidades[i][j].remove(estado[i][k])
+                if estado[k][j] and k != i  and estado[k][j] in possibilidades[i][j]:
+                    possibilidades[i][j].remove(estado[k][j])
     return copy.copy(possibilidades)
 
 
 def analisar_bloco(estado):
-    possibilidades = [[[i for i in range(1, 10)]] * 9] * 9
+    possibilidades = [[[i for i in range(1, 10)] for _ in range(9)] for _ in range(9)]
     for i, linha in enumerate(estado):
         for j, elemento in enumerate(linha):
             linha = (i // 3) * 3
@@ -129,16 +124,16 @@ def analisar_bloco(estado):
                 for h in range(3):
                     if linha + k == i and coluna + h == j:
                         continue
-                    if estado[linha + k][coluna + h] and estado[linha + k][coluna + h] in possibilidades:
-                        possibilidades.remove(estado[linha + k][coluna + h])
+                    if estado[linha + k][coluna + h] and estado[linha + k][coluna + h] in possibilidades[i][j]:
+                        possibilidades[i][j].remove(estado[linha + k][coluna + h])
     return copy.copy(possibilidades)
 
 def juntar(*estados):
-    resultado = [[set([i for i in range(1, 10)])] * 9] * 9
+    resultado = [[set([i for i in range(1, 10)]) for _ in range(9)] for _ in range(9)]
     for estado in estados:
         for i, linha in enumerate(estado):
             for j, possibilidades in enumerate(linha):
-                resultado[i][j].intersection(set(possibilidades))
+                resultado[i][j] = resultado[i][j].intersection(set(possibilidades))
     return copy.copy([[list(i) for i in linha] for linha in resultado])
 
 
@@ -150,17 +145,18 @@ def calcular_estado_de_possibilidades(estado):
 
 
 def resolver():
-    
     # Setup
     estado = [[0 for _ in range(9)] for _ in range(9)]
     estado_de_possibilidades = calcular_estado_de_possibilidades(estado)
     estados = [estado]
     estados_de_possibilidades = [estado_de_possibilidades]
-    mostrar_matriz(estado)
-    mostrar_matriz(estado_de_possibilidades)
 
     # Algoritmo
     while not eh_solucao(estado):
+        for e in estados:
+            mostrar_matriz(e)
+        mostrar_matriz(estado)
+        mostrar_matriz(estado_de_possibilidades)
         if sem_solucao(estado_de_possibilidades):
             estados.pop()
             estados_de_possibilidades.pop()
@@ -171,9 +167,7 @@ def resolver():
             estado_de_possibilidades = calcular_estado_de_possibilidades(estado)
             estados.append(estado)
             estados_de_possibilidades.append(estado_de_possibilidades)
-        mostrar_matriz(estado)
-        mostrar_matriz(estado_de_possibilidades)
-            
+        input()
     
     # Resultado
     mostrar_matriz(estado)
