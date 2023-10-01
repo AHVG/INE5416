@@ -67,38 +67,36 @@ def obter_possibilidades(estado, posicao):
     x, y = posicao
     # Maior Menor
     sinais_elemento = sinais[y][x]
-    maior = 9 - sinais_elemento[">"]
-    menor = sinais_elemento["<"]
+    maior = 9 - sinais_elemento["<"]
+    menor = sinais_elemento[">"]
     if sinais_elemento["C"] == MAIOR:
-        if estado[y - 1][x] and maior > estado[y - 1][x]:
-            maior = estado[y - 1][x]
-    elif sinais_elemento["C"] == MENOR:
         if estado[y - 1][x] and menor < estado[y - 1][x]:
             menor = estado[y - 1][x]
+    elif sinais_elemento["C"] == MENOR:
+        if estado[y - 1][x] and maior > estado[y - 1][x]:
+            maior = estado[y - 1][x]
     
     if sinais_elemento["D"] == MAIOR:
-        if estado[y][x + 1] and maior > estado[y][x + 1]:
-            maior = estado[y][x + 1]
-    elif sinais_elemento["D"] == MENOR:
         if estado[y][x + 1] and menor < estado[y][x + 1]:
             menor = estado[y][x + 1]
+    elif sinais_elemento["D"] == MENOR:
+        if estado[y][x + 1] and menor > estado[y][x + 1]:
+            maior = estado[y][x + 1]
 
     if sinais_elemento["B"] == MAIOR:
-        if estado[y + 1][x] and maior > estado[y + 1][x]:
-            maior = estado[y + 1][x]
-    elif sinais_elemento["B"] == MENOR:
         if estado[y + 1][x] and menor < estado[y + 1][x]:
             menor = estado[y + 1][x]
+    elif sinais_elemento["B"] == MENOR:
+        if estado[y + 1][x] and maior > estado[y + 1][x]:
+            maior = estado[y + 1][x]
 
     if sinais_elemento["E"] == MAIOR:
+        if estado[y][x - 1] and menor < estado[y][x - 1]:
+            menor = estado[y][x - 1]
+    elif sinais_elemento["E"] == MENOR:
         if estado[y][x - 1] and maior > estado[y][x - 1]:
             maior = estado[y][x - 1]
-    elif sinais_elemento["E"] == MENOR:
-        if estado[y - 1][x - 1] and menor < estado[y][x - 1]:
-            menor = estado[y][x - 1]
-    possibilidades = [i for i in range(menor + 1, maior)]
-    print(menor, maior)
-    print(possibilidades)
+    possibilidades = [i for i in range(menor + 1, maior + 1)]
     # linha e coluna
     for k in range(9):
         if k != y and estado[k][x] in possibilidades:
@@ -106,13 +104,12 @@ def obter_possibilidades(estado, posicao):
         if k != x and estado[y][k] in possibilidades:
             possibilidades.remove(estado[y][k])
     # bloco
+    linha = (y // 3) * 3
+    coluna = (x // 3) * 3
     for i in range(3):
         for j in range(3):
-            linha = y // 3
-            coluna = x // 3
-            if linha != y and coluna != x and estado[linha + i][coluna + j] in possibilidades:
+            if (linha + i != y or coluna + j != x) and estado[linha + i][coluna + j] in possibilidades:
                 possibilidades.remove(estado[linha + i][coluna + j])
-    print(possibilidades)
     return copy.deepcopy(possibilidades)
 
 
@@ -124,11 +121,9 @@ def obter_posicao_mais_restrita(estado):
             if not elemento:
                 nova_posicao = (j, i)
                 nova_possibilidades = len(obter_possibilidades(estado, nova_posicao))
-                # print(i, j, obter_possibilidades(estado, nova_posicao))
                 if possibilidades > nova_possibilidades:
                     possibilidades = nova_possibilidades
                     posicao = nova_posicao
-    
     if not possibilidades:
         return None
     return copy.deepcopy(posicao)
@@ -151,10 +146,8 @@ def mostrar_matriz(matriz):
 
 
 def resolver(estado, profundidade):
-    print(f"Estado da pronfundidade {profundidade}\n")
-    mostrar_matriz(estado)
-    mostrar_matriz(sinais)
-    input()
+    # print(f"Estado da pronfundidade {profundidade}\n")
+    # mostrar_matriz(estado)
 
     if eh_solucao(estado):
         mostrar_matriz(estado)
@@ -172,15 +165,15 @@ def resolver(estado, profundidade):
     return False
 
 
-resposta = [[9, 8, 6, 3, 5, 4, 2, 7, 1],
-            [2, 7, 5, 9, 6, 1, 8, 4, 3],
-            [3, 4, 1, 8, 2, 7, 9, 6, 5],
-            [8, 1, 2, 4, 3, 9, 6, 5, 7],
-            [4, 3, 9, 5, 7, 6, 1, 2, 8],
-            [5, 6, 7, 2, 1, 8, 4, 3, 9],
-            [7, 9, 8, 6, 4, 3, 5, 1, 2],
-            [6, 5, 3, 1, 8, 2, 7, 9, 4],
-            [1, 2, 4, 7, 9, 5, 3, 8, 6]]
+resposta = [[1, 8, 4, 2, 7, 6, 5, 3, 9],
+            [3, 9, 7, 5, 4, 8, 2, 1, 6],
+            [2, 6, 5, 3, 1, 9, 8, 7, 4],
+            [5, 2, 8, 1, 9, 4, 7, 6, 3],
+            [4, 7, 3, 8, 6, 2, 1, 9, 5],
+            [6, 1, 9, 7, 5, 3, 4, 8, 2],
+            [8, 5, 6, 9, 2, 7, 3, 4, 1],
+            [7, 4, 2, 6, 3, 1, 9, 5, 8],
+            [9, 3, 1, 4, 8, 5, 6, 2, 7]] # Nr. 123
 sinais = fazer_tabuleiro_sinais(resposta)
 
 
