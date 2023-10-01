@@ -1,4 +1,5 @@
 import copy
+import time
 
 from dataclasses import dataclass
 
@@ -15,6 +16,17 @@ class Casa:
     cima: int = NADA
     maiores: int = 0
     menores: int = 0
+
+
+def medir_tempo(funcao):
+    def wrapper(*args, **kwargs):
+        inicio = time.time()
+        resultado = funcao(*args, **kwargs)
+        fim = time.time()
+        tempo_de_execucao = fim - inicio
+        print(f"A função {funcao.__name__} levou {tempo_de_execucao} segundos para ser executada.")
+        return resultado
+    return wrapper
 
 
 def fazer_tabuleiro_sinais(resposta):
@@ -184,19 +196,26 @@ def mostrar_matriz(matriz):
 def resolver(estado, profundidade):
 
     if eh_solucao(estado):
-        mostrar_matriz(estado)
-        return True
+        return copy.deepcopy(estado)
 
     if sem_solucao(estado):
-        return False
+        return None
 
     posicao_mais_restrita = obter_posicao_mais_restrita(estado)
     for possibilidade in obter_possibilidades(estado, posicao_mais_restrita):
         novo_estado = copy.deepcopy(estado)
         novo_estado[posicao_mais_restrita[1]][posicao_mais_restrita[0]] = possibilidade
-        if resolver(novo_estado, profundidade + 1):
-            return True
-    return False
+        if resposta := resolver(novo_estado, profundidade + 1):
+            return resposta
+    return None
+
+
+def confirmar(resultado, resposta):
+    for i in range(9):
+        for j in range(9):
+            if resultado[i][j] != resposta[i][j]:
+                return False
+    return True
 
 
 resposta = [[1, 8, 4, 2, 7, 6, 5, 3, 9],
@@ -211,16 +230,9 @@ resposta = [[1, 8, 4, 2, 7, 6, 5, 3, 9],
 sinais = fazer_tabuleiro_sinais(resposta)
 
 
+@medir_tempo
 def main():
-    import time
-
-    inicio = time.time()
-    estado = [[0 for _ in range(9)] for _ in range(9)]
-    resolver(estado, 0)
-    tempo = (time.time() - inicio) / 60
-    print("Tempo", tempo)
-    # percorrer_sinais(sinais)
-    # print(sinais)
+    print("Resposta:", confirmar(resolver([[0 for _ in range(9)] for _ in range(9)], 0), resposta))
 
 
 if __name__ == "__main__":
