@@ -62,7 +62,18 @@ def obter_possibilidades(estado, posicao):
 
 
 def obter_posicao_mais_restrita(estado):
-    pass
+    posicao = [0,0]
+    possibilidades = 10
+    for i, linha in enumerate(estado):
+        for j, elemento in enumerate(linha):
+            if not elemento:
+                nova_posicao, nova_possibilidades = (j, i), len(obter_possibilidades(estado, nova_posicao))
+                if possibilidades > nova_possibilidades:
+                    possibilidades = nova_possibilidades
+                    posicao = nova_posicao
+    if not possibilidades:
+        return None
+    return copy.copy(posicao)
 
 
 def sem_solucao(estado):
