@@ -1,40 +1,115 @@
+import copy
 
-def sem_solucao(estado):
-    pass
+
+MAIOR = 2
+MENOR = 1
+NADA = 0
+
+
+def fazer_tabuleiro_sinais(resposta):
+    resultado = [[[] for _ in range(9)] for _ in range(9)]
+
+    for i, linha in enumerate(resposta):
+        for j, elemento in enumerate(linha):
+            for d in range(-1, 2, 2):
+                if -1 < j < 9 and -1 < i + d < 9 and i // 3 == (i + d) // 3:
+                    if resposta[i + d][j] > elemento:
+                        resultado[i][j].append(MENOR)
+                    else:
+                        resultado[i][j].append(MAIOR)
+                else:
+                    resultado[i][j].append(NADA)
+
+                if -1 < j + d < 9 and -1 < i < 9 and j // 3 == (j + d) // 3:
+                    if resposta[i][j + d] > elemento:
+                        resultado[i][j].append(MENOR)
+                    else:
+                        resultado[i][j].append(MAIOR)
+                else:
+                    resultado[i][j].append(NADA)
+
+    return resultado
+
+
+def eh_solucao(estado):
+    for linha in estado:
+        for elemento in linha:
+            if not elemento:
+                return False
+    return True
+
+
+def obter_possibilidades(estado, posicao):
+    possibilidades = [i for i in range(1, 10)]
+    x, y = posicao
+    # linha e coluna
+    for k in range(9):
+        if k != y and estado[k][x] in possibilidades:
+            possibilidades.remove(estado[k][x])
+        if k != x and estado[y][k] in possibilidades:
+            possibilidades.remove(estado[y][k])
+    # bloco
+    for i in range(3):
+        for j in range(3):
+            pass
+    return copy.copy(possibilidades)
 
 
 def obter_posicao_mais_restrita(estado):
     pass
 
 
-def obter_possibilidades(estado, posicao):
-    pass
+def sem_solucao(estado):
+    posicao = obter_posicao_mais_restrita()
+    if not posicao:
+        return True
+    return False
+
+
+def mostrar_matriz(matriz):
+    print()
+    for linha in matriz:
+        for elemento in linha:
+            print(elemento, end=" ")
+        print()
+    print()
 
 
 def resolver(estado):
+
+    # if eh_valido(estado):
+    #     return False
+
     if eh_solucao(estado):
-        print()
-        for linha in estado:
-            for elemento in linha:
-                print(elemento, end=" ")
-            print()
-        print()
+        mostrar_matriz(estado)
         return True
 
     if sem_solucao(estado):
         return False
 
     posicao_mais_restrita = obter_posicao_mais_restrita(estado)
-    for possibilidades in obter_possibilidades(estado, posicao_mais_restrita):
-        if resolver(estado):
+    for possibilidade in obter_possibilidades(estado, posicao_mais_restrita):
+        novo_estado = copy.copy(estado)
+        novo_estado[posicao_mais_restrita[1]][posicao_mais_restrita[0]] = possibilidade
+        if resolver(novo_estado):
             return True
     return False
 
 
+resposta = [[9, 8, 6, 3, 5, 4, 2, 7, 1],
+            [2, 7, 5, 9, 6, 1, 8, 4, 3],
+            [3, 4, 1, 8, 2, 7, 9, 6, 5],
+            [8, 1, 2, 4, 3, 9, 6, 5, 7],
+            [4, 3, 9, 5, 7, 6, 1, 2, 8],
+            [5, 6, 7, 2, 1, 8, 4, 3, 9],
+            [7, 9, 8, 6, 4, 3, 5, 1, 2],
+            [6, 5, 3, 1, 8, 2, 7, 9, 4],
+            [1, 2, 4, 7, 9, 5, 3, 8, 6]]
+sinais = fazer_tabuleiro_sinais(resposta)
+
+
 def main():
     estado = [[0 for _ in range(9)] for _ in range(9)]
-    sinais = None
-
     resolver(estado)
 
 
