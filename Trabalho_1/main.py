@@ -243,6 +243,7 @@ sinais = fazer_tabuleiro_sinais(resposta)
 
 @medir_tempo
 def main():
+    # see: https://www.janko.at/Raetsel/Sudoku/Vergleich/index.htm
     print("Resposta:", confirmar(resolver([[0 for _ in range(9)] for _ in range(9)], 0), resposta))
 
 
