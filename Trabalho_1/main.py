@@ -167,8 +167,7 @@ def obter_posicao_mais_restrita(estado):
                     possibilidades = nova_possibilidades[:]
                     posicao = nova_posicao
                     numero_de_possibilidade = novo_numero_de_possibilidade
-    if not len(possibilidades):
-        return None
+
     return posicao, possibilidades
 
 
@@ -178,6 +177,7 @@ def sem_solucao(estado):
             if not len(obter_possibilidades(estado, (j, i))):
                 return True
     return False
+
 
 def mostrar_matriz(matriz):
     print()
@@ -192,18 +192,18 @@ def mostrar_matriz(matriz):
 
 def resolver(estado):
 
+    if sem_solucao(estado):
+        return None
+    
     if eh_solucao(estado):
         return copy.deepcopy(estado)
 
-    if sem_solucao(estado):
-        return None
-
     posicao_mais_restrita, possibilidades = obter_posicao_mais_restrita(estado)
     for possibilidade in possibilidades:
-        novo_estado = copy.deepcopy(estado)
-        novo_estado[posicao_mais_restrita[1]][posicao_mais_restrita[0]] = possibilidade
-        if resposta := resolver(novo_estado):
+        estado[posicao_mais_restrita[1]][posicao_mais_restrita[0]] = possibilidade
+        if resposta := resolver(estado):
             return resposta
+    estado[posicao_mais_restrita[1]][posicao_mais_restrita[0]] = 0
     return None
 
 
@@ -223,7 +223,7 @@ resposta = [[1, 8, 4, 2, 7, 6, 5, 3, 9],
             [6, 1, 9, 7, 5, 3, 4, 8, 2],
             [8, 5, 6, 9, 2, 7, 3, 4, 1],
             [7, 4, 2, 6, 3, 1, 9, 5, 8],
-            [9, 3, 1, 4, 8, 5, 6, 2, 7]] # Nr. 123 -> 11.56
+            [9, 3, 1, 4, 8, 5, 6, 2, 7]] # Nr. 123 -> 10.37
 
 resposta = [[9, 2, 3, 5, 4, 7, 1, 6, 8],
             [6, 4, 7, 1, 9, 8, 5, 3, 2],
@@ -233,17 +233,17 @@ resposta = [[9, 2, 3, 5, 4, 7, 1, 6, 8],
             [3, 8, 2, 4, 7, 6, 9, 5, 1],
             [7, 5, 4, 2, 6, 9, 8, 1, 3],
             [8, 6, 9, 7, 1, 3, 2, 4, 5],
-            [2, 3, 1, 8, 5, 4, 6, 7, 9]] # Nr. 125 -> 70
+            [2, 3, 1, 8, 5, 4, 6, 7, 9]] # Nr. 125 -> 43.69
 
-resposta = [[7, 5, 2, 4, 9, 3, 1, 8, 6],
-            [3, 6, 8, 2, 5, 1, 7, 4, 9],
-            [9, 4, 1, 8, 6, 7, 3, 2, 5],
-            [1, 2, 3, 9, 7, 8, 6, 5, 4],
-            [5, 8, 9, 3, 4, 6, 2, 7, 1],
-            [4, 7, 6, 1, 2, 5, 8, 9, 3],
-            [8, 3, 5, 7, 1, 4, 9, 6, 2],
-            [2, 1, 4, 6, 8, 9, 5, 3, 7],
-            [6, 9, 7, 5, 3, 2, 4, 1, 8]] # Nr. 118 -> 1.27
+# resposta = [[7, 5, 2, 4, 9, 3, 1, 8, 6],
+#             [3, 6, 8, 2, 5, 1, 7, 4, 9],
+#             [9, 4, 1, 8, 6, 7, 3, 2, 5],
+#             [1, 2, 3, 9, 7, 8, 6, 5, 4],
+#             [5, 8, 9, 3, 4, 6, 2, 7, 1],
+#             [4, 7, 6, 1, 2, 5, 8, 9, 3],
+#             [8, 3, 5, 7, 1, 4, 9, 6, 2],
+#             [2, 1, 4, 6, 8, 9, 5, 3, 7],
+#             [6, 9, 7, 5, 3, 2, 4, 1, 8]] # Nr. 118 -> 1.17
  
 sinais = fazer_tabuleiro_sinais(resposta)
 
