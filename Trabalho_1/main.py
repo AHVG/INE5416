@@ -73,12 +73,11 @@ def fazer_tabuleiro_sinais(resposta):
 def percorrer_sinais(sinais):
     for i, linha in enumerate(sinais):
         for j, casa in enumerate(linha):
-            casa.maiores = percorrer_sinal(sinais, (j, i), MAIOR)
-            casa.menores = percorrer_sinal(sinais, (j, i), MENOR)
+            casa.maiores = percorrer_sinal(sinais, (j, i), MAIOR) - 1
+            casa.menores = percorrer_sinal(sinais, (j, i), MENOR) - 1
 
 
 def percorrer_sinal(sinais, posicao, sinal):
-    # TODO: Arrumar o set
     posicoes_visitadas = []
     posicoes_a_serem_visistadas = [posicao]
     while len(posicoes_a_serem_visistadas):
@@ -86,22 +85,14 @@ def percorrer_sinal(sinais, posicao, sinal):
         posicoes_visitadas.append(p)
         casa = sinais[p[1]][p[0]]
         if casa.cima == sinal:
-            aux = (p[0], p[1] - 1)
-            if aux not in posicoes_visitadas:
-                posicoes_a_serem_visistadas.append(aux)
+            posicoes_a_serem_visistadas.append((p[0], p[1] - 1))
         if casa.baixo == sinal:
-            aux = (p[0], p[1] + 1)
-            if aux not in posicoes_visitadas:
-                posicoes_a_serem_visistadas.append(aux)
+            posicoes_a_serem_visistadas.append((p[0], p[1] + 1))
         if casa.esquerda == sinal:
-            aux = (p[0] - 1, p[1])
-            if aux not in posicoes_visitadas:
-                posicoes_a_serem_visistadas.append(aux)
+            posicoes_a_serem_visistadas.append((p[0] - 1, p[1]))
         if casa.direita == sinal:
-            aux = (p[0] + 1, p[1])
-            if aux not in posicoes_visitadas:
-                posicoes_a_serem_visistadas.append(aux)
-    return len(set(posicoes_visitadas)) - 1
+            posicoes_a_serem_visistadas.append((p[0] + 1, p[1]))
+    return len(set(posicoes_visitadas))
 
 
 def eh_solucao(estado):
