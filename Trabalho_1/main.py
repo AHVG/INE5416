@@ -150,23 +150,26 @@ def obter_possibilidades(estado, posicao):
         for j in range(3):
             if (linha + i != y or coluna + j != x) and estado[linha + i][coluna + j] in possibilidades:
                 possibilidades.remove(estado[linha + i][coluna + j])
-    return copy.deepcopy(possibilidades)
+    return possibilidades
 
 
 def obter_posicao_mais_restrita(estado):
     posicao = [0,0]
-    possibilidades = 10
+    possibilidades = [1,2,3,4,5,6,7,8,9,10]
+    numero_de_possibilidade = 10
     for i, linha in enumerate(estado):
         for j, elemento in enumerate(linha):
             if not elemento:
                 nova_posicao = (j, i)
-                nova_possibilidades = len(obter_possibilidades(estado, nova_posicao))
-                if possibilidades > nova_possibilidades:
-                    possibilidades = nova_possibilidades
+                nova_possibilidades = obter_possibilidades(estado, nova_posicao)
+                novo_numero_de_possibilidade = len(nova_possibilidades)
+                if numero_de_possibilidade > novo_numero_de_possibilidade:
+                    possibilidades = nova_possibilidades[:]
                     posicao = nova_posicao
-    if not possibilidades:
+                    numero_de_possibilidade = novo_numero_de_possibilidade
+    if not len(possibilidades):
         return None
-    return copy.deepcopy(posicao)
+    return posicao, possibilidades
 
 
 def sem_solucao(estado):
@@ -185,7 +188,7 @@ def mostrar_matriz(matriz):
     print()
 
 
-def resolver(estado, profundidade):
+def resolver(estado):
 
     if eh_solucao(estado):
         return copy.deepcopy(estado)
@@ -193,11 +196,11 @@ def resolver(estado, profundidade):
     if sem_solucao(estado):
         return None
 
-    posicao_mais_restrita = obter_posicao_mais_restrita(estado)
-    for possibilidade in obter_possibilidades(estado, posicao_mais_restrita):
+    posicao_mais_restrita, possibilidades = obter_posicao_mais_restrita(estado)
+    for possibilidade in possibilidades:
         novo_estado = copy.deepcopy(estado)
         novo_estado[posicao_mais_restrita[1]][posicao_mais_restrita[0]] = possibilidade
-        if resposta := resolver(novo_estado, profundidade + 1):
+        if resposta := resolver(novo_estado):
             return resposta
     return None
 
@@ -218,7 +221,7 @@ resposta = [[1, 8, 4, 2, 7, 6, 5, 3, 9],
             [6, 1, 9, 7, 5, 3, 4, 8, 2],
             [8, 5, 6, 9, 2, 7, 3, 4, 1],
             [7, 4, 2, 6, 3, 1, 9, 5, 8],
-            [9, 3, 1, 4, 8, 5, 6, 2, 7]] # Nr. 123
+            [9, 3, 1, 4, 8, 5, 6, 2, 7]] # Nr. 123 -> 16
 
 resposta = [[9, 2, 3, 5, 4, 7, 1, 6, 8],
             [6, 4, 7, 1, 9, 8, 5, 3, 2],
@@ -228,7 +231,7 @@ resposta = [[9, 2, 3, 5, 4, 7, 1, 6, 8],
             [3, 8, 2, 4, 7, 6, 9, 5, 1],
             [7, 5, 4, 2, 6, 9, 8, 1, 3],
             [8, 6, 9, 7, 1, 3, 2, 4, 5],
-            [2, 3, 1, 8, 5, 4, 6, 7, 9]] # Nr. 125
+            [2, 3, 1, 8, 5, 4, 6, 7, 9]] # Nr. 125 65
 
 resposta = [[7, 5, 2, 4, 9, 3, 1, 8, 6],
             [3, 6, 8, 2, 5, 1, 7, 4, 9],
@@ -238,7 +241,7 @@ resposta = [[7, 5, 2, 4, 9, 3, 1, 8, 6],
             [4, 7, 6, 1, 2, 5, 8, 9, 3],
             [8, 3, 5, 7, 1, 4, 9, 6, 2],
             [2, 1, 4, 6, 8, 9, 5, 3, 7],
-            [6, 9, 7, 5, 3, 2, 4, 1, 8]] # Nr. 118
+            [6, 9, 7, 5, 3, 2, 4, 1, 8]] # Nr. 118 -> 1.84
  
 sinais = fazer_tabuleiro_sinais(resposta)
 
@@ -246,7 +249,9 @@ sinais = fazer_tabuleiro_sinais(resposta)
 @medir_tempo
 def main():
     # see: https://www.janko.at/Raetsel/Sudoku/Vergleich/index.htm
-    print("Resposta:", confirmar(resolver([[0 for _ in range(9)] for _ in range(9)], 0), resposta))
+    estado_inicial = [[0 for _ in range(9)] for _ in range(9)]
+    resultado = resolver(estado_inicial)
+    print("Resposta:", confirmar(resultado, resposta))
 
 
 if __name__ == "__main__":
