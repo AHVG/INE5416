@@ -79,45 +79,45 @@
     (cond
         ((= (elt (elt comparacao posicao) 0) 1)
         (if (and (< elemento (elt solucao (- posicao 9)))
-                (elt solucao (- posicao 9)))
+                (/= (elt solucao (- posicao 9)) 0))
             (return-from compara nil)))
 
         ((= (elt (elt comparacao posicao) 0) 0)
         (if (and (> elemento (elt solucao (- posicao 9)))
-                (elt solucao (- posicao 9)))
+                (/= (elt solucao (- posicao 9)) 0))
             (return-from compara nil)))
     )
     (cond
         ((= (elt (elt comparacao posicao) 1) 1)
         (if (and (< elemento (elt solucao (+ posicao 1)))
-                (elt solucao (+ posicao 1)))
+                (/= (elt solucao (+ posicao 1)) 0))
             (return-from compara nil)))
 
         ((= (elt (elt comparacao posicao) 1) 0)
         (if (and (> elemento (elt solucao (+ posicao 1)))
-                (elt solucao (+ posicao 1)))
+                (/= (elt solucao (+ posicao 1)) 0))
             (return-from compara nil)))
     )
     (cond
         ((= (elt (elt comparacao posicao) 2) 1)
         (if (and (< elemento (elt solucao (+ posicao 9)))
-                (elt solucao (+ posicao 9)))
+                (/= (elt solucao (+ posicao 9)) 0))
             (return-from compara nil)))
 
         ((= (elt (elt comparacao posicao) 2) 0)
         (if (and (> elemento (elt solucao (+ posicao 9)))
-                (elt solucao (+ posicao 9)))
+                (/= (elt solucao (+ posicao 9)) 0))
             (return-from compara nil)))
     )
     (cond
         ((= (elt (elt comparacao posicao) 3) 1)
         (if (and (< elemento (elt solucao (- posicao 1)))
-                (elt solucao (- posicao 1)))
+                (/= (elt solucao (- posicao 1)) 0))
             (return-from compara nil)))
 
         ((= (elt (elt comparacao posicao) 3) 0)
         (if (and (> elemento (elt solucao (- posicao 1)))
-                (elt solucao (- posicao 1)))
+                (/= (elt solucao (- posicao 1)) 0))
             (return-from compara nil)))
 
     )
@@ -137,7 +137,6 @@
         )
         (t
             (setf (elt solucao posicao) elemento)
-            (print solucao)
             (loop for possibilidade in (elt possibilidades (+ posicao 1)) do
                 (if (resolve possibilidade (+ posicao 1)) (return t)))
             (setf (elt solucao posicao) 0)
