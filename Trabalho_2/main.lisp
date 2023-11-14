@@ -24,9 +24,9 @@
 
 
 (defun calcular-possibilidades ()
-    (let ((solucao '()))
+    (let ((resultado '()))
         (loop for i from 0 to 80 do
-        (let ((linha '()) (limite-inferior 1) (limite-superior 9))
+            (let ((linha '()) (limite-inferior 1) (limite-superior 9))
             ; Visitados está comom global, pois os parâmetros de uma função é uma copia e não referência 
             ; Seta ele como vazio para calcular o limite inferior
             (setq visitados (list ))
@@ -37,9 +37,9 @@
             (setq limite-superior (limite i 0))
             
             (loop for j from limite-inferior to (- 10 limite-superior) do
-            (push j linha))
-            (push (reverse linha) solucao)))
-        (reverse solucao))
+                (push j linha))
+                (push (reverse linha) resultado)))
+        (reverse resultado))
 )
 
 
@@ -64,7 +64,6 @@
 
 
 (defun repete-regiao (elemento posicao)
-    ;; (print posicao)
     (let ((linha (* 3 (floor (/ posicao 27))))
         (coluna (* 3 (floor (/ (mod posicao 9) 3)))))
     (loop for i from linha below (+ linha 3) do
@@ -146,15 +145,24 @@
 )
 
 
+(defun mostrar-matriz (matriz)
+  (format t "~%")
+  (loop for i below (length matriz) do
+    (cond ((and (zerop (mod i 27)) (/= i 0)) (format t "~%~%"))
+          ((zerop (mod i 9)) (format t "~%"))
+          ((zerop (mod i 3)) (format t "   ")))
+    (format t "~a " (elt matriz i)))
+  (format t "~%"))
+
 
 (defun main()
-    (write-line (write-to-string comparacao))
+    ;; (write-line (write-to-string comparacao))
     (write-line (write-to-string solucao))
-    (write-line (write-to-string possibilidades))
-    (loop for possibilidade in (elt possibilidades 0) do
-        (if (resolve possibilidade 0)
-            (write-line (write-to-string solucao))
-            t))
+    ;; (write-line (write-to-string possibilidades))
+    ;; (loop for possibilidade in (elt possibilidades 0) do
+    ;;     (if (resolve possibilidade 0)
+    ;;         (write-line (write-to-string solucao))
+    ;;         t))
 )
 
 (main)
