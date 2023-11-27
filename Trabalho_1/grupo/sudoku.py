@@ -197,12 +197,12 @@ def main():
     inicio = time.time()
     for t in possibilidades[0]:
         if resolve(t, 0, solucao, matriz_comparacao, possibilidades): 
+            mostrar_matriz(solucao)
             break
     fim = time.time()
     
     tempo_de_execucao = fim - inicio
     
-    mostrar_matriz(solucao)
     print(f"O código levou {tempo_de_execucao} segundos para ser executado.")
 
 

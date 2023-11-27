@@ -48,9 +48,9 @@
 
 
 (defun repete-linha (elemento posicao)
-    (loop for i from 0 to 8 do
+    (loop for i from 0 below 8 do
         (if (= (elt solucao (+ i (* 9 (floor posicao 9)))) elemento) 
-            (return t)))
+            (return-from repete-linha t)))
     nil
 )
 
@@ -58,7 +58,7 @@
 (defun repete-coluna (elemento posicao)
     (loop for i from 0 to 8 do
         (if (= (elt solucao (+ (* 9 i) (mod posicao 9))) elemento) 
-            (return t)))
+            (return-from repete-coluna t)))
     nil
 )
 
@@ -69,7 +69,7 @@
     (loop for i from linha below (+ linha 3) do
         (loop for j from coluna below (+ coluna 3) do
             (if (= (elt solucao (+ (* 9 i) j)) elemento)
-                (return t))))
+                (return-from repete-regiao t))))
     nil)
 )
 
@@ -130,14 +130,14 @@
         ((repete-coluna elemento posicao) nil)
         ((repete-regiao elemento posicao) nil)
         ((not (compara elemento posicao)) nil)
-        ((= posicao 80)
-            (setf (elt solucao posicao) elemento)
-            t
-        )
         (t
             (setf (elt solucao posicao) elemento)
-            (loop for possibilidade in (elt possibilidades (+ posicao 1)) do
-                (if (resolve possibilidade (+ posicao 1)) (return t)))
+            (mostrar-matriz solucao)
+            (if (= posicao 80)
+                t
+            (dolist (e (elt possibilidades (1+ posicao)))
+                (if (resolve e (1+ posicao))
+                    t)))
             (setf (elt solucao posicao) 0)
             nil
         )
@@ -156,13 +156,15 @@
 
 
 (defun main()
-    ;; (write-line (write-to-string comparacao))
-    (write-line (write-to-string solucao))
-    ;; (write-line (write-to-string possibilidades))
-    ;; (loop for possibilidade in (elt possibilidades 0) do
-    ;;     (if (resolve possibilidade 0)
-    ;;         (write-line (write-to-string solucao))
-    ;;         t))
+    ;; (mostrar-matriz possibilidades)
+    ;; (mostrar-matriz comparacao)
+    ;; (mostrar-matriz solucao)
+
+
+    (dolist (e (elt possibilidades 0))
+    (if (resolve e 0)
+            (mostrar-matriz solucao)
+            (return-from main nil)))
 )
 
 (main)
