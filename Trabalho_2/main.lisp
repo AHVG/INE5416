@@ -1,5 +1,28 @@
 
-(defvar comparacao (list (list -1 1 1 -1) (list -1 0 0 0) (list -1 -1 0 1) (list -1 1 1 -1) (list -1 0 0 0) (list -1 -1 0 1) (list -1 0 0 -1) (list -1 0 1 1) (list -1 -1 1 1) (list 0 1 1 -1) (list 1 0 1 0) (list 1 -1 0 1) (list 0 0 0 -1) (list 1 1 1 1) (list 1 -1 1 0) (list 1 1 0 -1) (list 0 1 0 0) (list 0 -1 0 0) (list 0 1 -1 -1) (list 0 0 -1 0) (list 1 -1 -1 1) (list 1 1 -1 -1) (list 0 1 -1 0) (list 0 -1 -1 0) (list 1 0 -1 -1) (list 1 1 -1 1) (list 1 -1 -1 0) (list -1 0 1 -1) (list -1 1 0 1) (list -1 -1 0 0) (list -1 1 1 -1) (list -1 1 0 0) (list -1 -1 0 0) (list -1 0 0 -1) (list -1 1 1 1) (list -1 -1 0 0) (list 0 0 0 -1) (list 1 1 1 1) (list 1 -1 1 0) (list 0 0 0 -1) (list 1 1 1 1) (list 1 -1 0 0) (list 1 1 0 -1) (list 0 0 0 0) (list 1 -1 1 1) (list 1 0 -1 -1) (list 0 1 -1 1) (list 0 -1 -1 0) (list 1 0 -1 -1) (list 0 1 -1 1) (list 1 -1 -1 0) (list 1 1 -1 -1) (list 1 1 -1 0) (list 0 -1 -1 0) (list -1 1 0 -1) (list -1 1 0 0) (list -1 -1 0 0) (list -1 0 0 -1) (list -1 0 1 1) (list -1 -1 1 1) (list -1 1 1 -1) (list -1 0 0 0) (list -1 -1 0 1) (list 1 1 1 -1) (list 1 0 1 0) (list 1 -1 1 1) (list 1 1 0 -1) (list 0 0 0 0) (list 0 -1 0 1) (list 0 0 0 -1) (list 1 0 0 1) (list 1 -1 0 1) (list 0 0 -1 -1) (list 0 1 -1 1) (list 0 -1 -1 0) (list 1 1 -1 -1) (list 1 1 -1 0) (list 1 -1 -1 0) (list 1 0 -1 -1) (list 1 0 -1 1) (list 1 -1 -1 1)))
+;; (defvar comparacao (list (list -1 1 1 -1) (list -1 0 0 0) (list -1 -1 0 1) (list -1 1 1 -1) (list -1 0 0 0) (list -1 -1 0 1) (list -1 0 0 -1) (list -1 0 1 1) (list -1 -1 1 1) (list 0 1 1 -1) (list 1 0 1 0) (list 1 -1 0 1) (list 0 0 0 -1) (list 1 1 1 1) (list 1 -1 1 0) (list 1 1 0 -1) (list 0 1 0 0) (list 0 -1 0 0) (list 0 1 -1 -1) (list 0 0 -1 0) (list 1 -1 -1 1) (list 1 1 -1 -1) (list 0 1 -1 0) (list 0 -1 -1 0) (list 1 0 -1 -1) (list 1 1 -1 1) (list 1 -1 -1 0) (list -1 0 1 -1) (list -1 1 0 1) (list -1 -1 0 0) (list -1 1 1 -1) (list -1 1 0 0) (list -1 -1 0 0) (list -1 0 0 -1) (list -1 1 1 1) (list -1 -1 0 0) (list 0 0 0 -1) (list 1 1 1 1) (list 1 -1 1 0) (list 0 0 0 -1) (list 1 1 1 1) (list 1 -1 0 0) (list 1 1 0 -1) (list 0 0 0 0) (list 1 -1 1 1) (list 1 0 -1 -1) (list 0 1 -1 1) (list 0 -1 -1 0) (list 1 0 -1 -1) (list 0 1 -1 1) (list 1 -1 -1 0) (list 1 1 -1 -1) (list 1 1 -1 0) (list 0 -1 -1 0) (list -1 1 0 -1) (list -1 1 0 0) (list -1 -1 0 0) (list -1 0 0 -1) (list -1 0 1 1) (list -1 -1 1 1) (list -1 1 1 -1) (list -1 0 0 0) (list -1 -1 0 1) (list 1 1 1 -1) (list 1 0 1 0) (list 1 -1 1 1) (list 1 1 0 -1) (list 0 0 0 0) (list 0 -1 0 1) (list 0 0 0 -1) (list 1 0 0 1) (list 1 -1 0 1) (list 0 0 -1 -1) (list 0 1 -1 1) (list 0 -1 -1 0) (list 1 1 -1 -1) (list 1 1 -1 0) (list 1 -1 -1 0) (list 1 0 -1 -1) (list 1 0 -1 1) (list 1 -1 -1 1)))
+(defvar comparacao
+  (list
+   (list -1 1 1 -1) (list -1 1 0 0) (list -1 -1 0 0) (list -1 0 1 -1)
+   (list -1 1 1 1) (list -1 -1 1 0) (list -1 0 0 -1) (list -1 1 1 1)
+   (list -1 -1 0 0) (list 0 0 0 -1) (list 1 0 1 1) (list 1 -1 1 1)
+   (list 0 0 0 -1) (list 0 1 0 1) (list 0 -1 0 0) (list 1 1 1 -1)
+   (list 0 0 1 0) (list 1 -1 1 1) (list 1 1 -1 -1) (list 0 1 -1 0)
+   (list 0 -1 -1 0) (list 1 1 -1 -1) (list 1 0 -1 0) (list 1 -1 -1 1)
+   (list 0 1 -1 -1) (list 0 0 -1 0) (list 0 -1 -1 1) (list -1 0 0 -1)
+   (list -1 0 0 1) (list -1 -1 0 1) (list -1 1 1 -1) (list -1 0 1 0)
+   (list -1 -1 1 1) (list -1 1 1 -1) (list -1 1 0 0) (list -1 -1 1 0)
+   (list 1 0 1 -1) (list 1 0 1 1) (list 1 -1 1 1) (list 0 0 1 -1)
+   (list 0 0 1 1) (list 0 -1 1 1) (list 0 0 0 -1) (list 1 1 0 1)
+   (list 0 -1 0 0) (list 0 0 -1 -1) (list 0 1 -1 1) (list 0 -1 -1 0)
+   (list 0 0 -1 -1) (list 0 0 -1 1) (list 0 -1 -1 1) (list 1 0 -1 -1)
+   (list 1 1 -1 1) (list 1 -1 -1 0) (list -1 1 1 -1) (list -1 0 1 0)
+   (list -1 -1 1 1) (list -1 1 1 -1) (list -1 0 0 0) (list -1 -1 0 1)
+   (list -1 1 1 -1) (list -1 1 1 0) (list -1 -1 0 0) (list 0 1 0 -1)
+   (list 0 0 0 0) (list 0 -1 0 1) (list 0 0 1 -1) (list 1 0 1 1)
+   (list 1 -1 1 1) (list 0 1 1 -1) (list 0 0 1 0) (list 1 -1 0 1)
+   (list 1 0 -1 -1) (list 1 1 -1 1) (list 1 -1 -1 0) (list 0 1 -1 -1)
+   (list 0 1 -1 0) (list 0 -1 -1 0) (list 0 1 -1 -1) (list 0 0 -1 0)
+   (list 1 -1 -1 1)))
 (defvar visitados (list ))
 
 
@@ -132,14 +155,13 @@
         ((not (compara elemento posicao)) nil)
         (t
             (setf (elt solucao posicao) elemento)
-            (mostrar-matriz solucao)
             (if (= posicao 80)
                 t
-            (dolist (e (elt possibilidades (1+ posicao)))
-                (if (resolve e (1+ posicao))
-                    t)))
+            (dolist (e (elt possibilidades (+ 1 posicao)))
+                (if (resolve e (+ 1 posicao))
+                    (return-from resolve t))))
             (setf (elt solucao posicao) 0)
-            nil
+            (return-from resolve nil)
         )
     )
 )
@@ -156,15 +178,19 @@
 
 
 (defun main()
-    ;; (mostrar-matriz possibilidades)
-    ;; (mostrar-matriz comparacao)
-    ;; (mostrar-matriz solucao)
+    (mostrar-matriz possibilidades)
+    (mostrar-matriz comparacao)
+    (mostrar-matriz solucao)
 
+    (loop for i below (length (elt possibilidades 0))do
+        (setf resultado (resolve (elt (elt possibilidades 0) i) 0))
+        (if (not resultado)
+            (format t "~d~%" (elt (elt possibilidades 0) i))    
+        (return-from main nil)
+        )
+        )
 
-    (dolist (e (elt possibilidades 0))
-    (if (resolve e 0)
-            (mostrar-matriz solucao)
-            (return-from main nil)))
+    (mostrar-matriz solucao)
 )
 
 (main)
