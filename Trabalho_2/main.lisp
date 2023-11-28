@@ -156,7 +156,7 @@
         (t
             (setf (elt solucao posicao) elemento)
             (if (= posicao 80)
-                t
+                (return-from resolve t)
             (dolist (e (elt possibilidades (+ 1 posicao)))
                 (if (resolve e (+ 1 posicao))
                     (return-from resolve t))))
@@ -184,13 +184,11 @@
 
     (loop for i below (length (elt possibilidades 0))do
         (setf resultado (resolve (elt (elt possibilidades 0) i) 0))
-        (if (not resultado)
-            (format t "~d~%" (elt (elt possibilidades 0) i))    
-        (return-from main nil)
-        )
-        )
+        (if (eq resultado t)
+            (progn (mostrar-matriz solucao)
+            (return-from main nil)))
+    )
 
-    (mostrar-matriz solucao)
 )
 
 (main)
