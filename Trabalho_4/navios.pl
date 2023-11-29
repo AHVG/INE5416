@@ -62,11 +62,11 @@ todosDiferentes([H|T]) :- not(member(H,T)), todosDiferentes(T).
 solucao(ListaSolucao) :- 
 
     ListaSolucao = [
-        navio(Nacionalidade1, Saida1, Carregamento1, Chamine1, Destino1),
-        navio(Nacionalidade2, Saida2, Carregamento2, Chamine2, Destino2),
-        navio(Nacionalidade3, Saida3, Carregamento3, Chamine3, Destino3),
-        navio(Nacionalidade4, Saida4, Carregamento4, Chamine4, Destino4),
-        navio(Nacionalidade5, Saida5, Carregamento5, Chamine5, Destino5)
+        homem(Camiseta1, Dono1, Profissao1, Companhia1, Animal1, Idade1),
+        homem(Camiseta2, Dono2, Profissao2, Companhia2, Animal2, Idade2),
+        homem(Camiseta3, Dono3, Profissao3, Companhia3, Animal3, Idade3),
+        homem(Camiseta4, Dono4, Profissao4, Companhia4, Animal4, Idade4),
+        homem(Camiseta5, Dono5, Profissao5, Companhia5, Animal5, Idade5)
     ],
 
     %O navio Grego sai às 6 da manhã e carrega Café.
@@ -115,19 +115,21 @@ solucao(ListaSolucao) :-
     member(navio(_, 6, _, _, hamburgo), ListaSolucao),
     
     %Testa todas as possibilidades...
-    nacionalidade(Nacionalidade1), nacionalidade(Nacionalidade2), nacionalidade(Nacionalidade3), nacionalidade(Nacionalidade4), nacionalidade(Nacionalidade5),
-    todosDiferentes([Nacionalidade1, Nacionalidade2, Nacionalidade3, Nacionalidade4, Nacionalidade5]),
+    camiseta(Camiseta1), camiseta(Camiseta2), camiseta(Camiseta3), camiseta(Camiseta4), camiseta(Camiseta5),
+    todosDiferentes([Camiseta1, Camiseta2, Camiseta3, Camiseta4, Camiseta5]),
     
-    saida(Saida1), saida(Saida2), saida(Saida3), saida(Saida4), saida(Saida5),
-    todosDiferentes([Saida1, Saida2, Saida3, Saida4, Saida5]),
+    dono(Dono1), dono(Dono2), dono(Dono3), dono(Dono4), dono(Dono5),
+    todosDiferentes([Dono1, Dono2, Dono3, Dono4, Dono5]),
     
-    carregamento(Carregamento1), carregamento(Carregamento2), carregamento(Carregamento3), carregamento(Carregamento4), carregamento(Carregamento5),
-    todosDiferentes([Carregamento1, Carregamento2, Carregamento3, Carregamento4, Carregamento5]),
+    profissao(Profissao1), profissao(Profissao2), profissao(Profissao3), profissao(Profissao4), profissao(Profissao5),
+    todosDiferentes([Profissao1, Profissao2, Profissao3, Profissao4, Profissao5]),
     
-    chamine(Chamine1), chamine(Chamine2), chamine(Chamine3), chamine(Chamine4), chamine(Chamine5),
-    todosDiferentes([Chamine1, Chamine2, Chamine3, Chamine4, Chamine5]),
+    companhia(Companhia1), companhia(Companhia2), companhia(Companhia3), companhia(Companhia4), companhia(Companhia5),
+    todosDiferentes([Companhia1, Companhia2, Companhia3, Companhia4, Companhia5]),
     
-    destino(Destino1), destino(Destino2), destino(Destino3), destino(Destino4), destino(Destino5),
-    todosDiferentes([Destino1, Destino2, Destino3, Destino4, Destino5]).
-    
+    animal(Animal1), animal(Animal2), animal(Animal3), animal(Animal4), animal(Animal5),
+    todosDiferentes([Animal1, Animal2, Animal3, Animal4, Animal5]).
+
+    idade(Idade1), idade(Idade2), idade(Idade3), idade(Idade4), idade(Idade5),
+    todosDiferentes([Idade1, Idade2, Idade3, Idade4, Idade5]).
     
