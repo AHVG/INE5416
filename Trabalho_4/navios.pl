@@ -1,32 +1,44 @@
-nacionalidade(brasileiro).
-nacionalidade(espanhol).
-nacionalidade(grego).
-nacionalidade(ingles).
-nacionalidade(frances).
 
-saida(5).
-saida(6).
-saida(7).
-saida(8).
-saida(9).
+camiseta(amarela).
+camiseta(azul).
+camiseta(branca).
+camiseta(verde).
+camiseta(vermelha).
 
-carregamento(arroz).
-carregamento(cacau).
-carregamento(cha).
-carregamento(milho).
-carregamento(cafe).
 
-chamine(azul).
-chamine(branca).
-chamine(verde).
-chamine(vermelha).
-chamine(preta).
+dono(bruno).
+dono(caio).
+dono(raphael).
+dono(sidney).
+dono(victor).
 
-destino(hamburgo).
-destino(macau).
-destino(manila).
-destino(santos).
-destino(rotterdam).
+
+profissao(analista).
+profissao(designer).
+profissao(joalheiro).
+profissao(policial).
+profissao(sociologo).
+
+
+companhia(amigo).
+companhia(esposa).
+companhia(filho).
+companhia(irma).
+companhia(mae).
+
+
+animal(cachorro).
+animal(furao).
+animal(gato).
+animal(iguana).
+animal(mini porco).
+
+
+idade(1).
+idade(2).
+idade(3).
+idade(4).
+idade(5).
 
 
 %X está à ao lado de Y
