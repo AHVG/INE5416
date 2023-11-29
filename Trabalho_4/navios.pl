@@ -31,7 +31,7 @@ animal(cachorro).
 animal(furao).
 animal(gato).
 animal(iguana).
-animal(mini porco).
+animal(mini_porco).
 
 
 idade(1).
@@ -61,6 +61,9 @@ todosDiferentes([H|T]) :- not(member(H,T)), todosDiferentes(T).
 
 solucao(ListaSolucao) :- 
 
+    %Ver oq quer dizer exatamente a esquerda ou a direita
+    %Ver como fazer lado a lado
+
     ListaSolucao = [
         homem(Camiseta1, Dono1, Profissao1, Companhia1, Animal1, Idade1),
         homem(Camiseta2, Dono2, Profissao2, Companhia2, Animal2, Idade2),
@@ -69,50 +72,75 @@ solucao(ListaSolucao) :-
         homem(Camiseta5, Dono5, Profissao5, Companhia5, Animal5, Idade5)
     ],
 
-    %O navio Grego sai às 6 da manhã e carrega Café.
-    member(navio(grego, 6, cafe, _, _), ListaSolucao),
+    %O animal de 2 anos está na primeira posição
+    Idade2 = 2,
 
-    %O navio do meio tem a chaminé Preta.
-    Chamine3 = preta,
-    
-    %O navio Inglês sai às 9 da manhã.
-    member(navio(ingles, 9, _, _, _), ListaSolucao),
-    
-    %O navio Francês, que tem a chaminé Azul, está à esquerda do navio que carrega Café
-    aEsquerda(navio(frances, _, _, azul, _), navio(_, _, cafe, _, _), ListaSolucao),
-    
-    %À direita do navio que carrega Cacau está o navio que vai para Macau.
-    aEsquerda(navio(_, _, cacau, _, _), navio(_, _, _, _, macau), ListaSolucao),
-    
-    %O navio Brasileiro está indo para Manila.
-    member(navio(brasileiro, _, _, _, manila), ListaSolucao),
-    
-    %O navio que carrega Arroz está ancorado ao lado do navio com chaminé Verde.
-    aoLado(navio(_, _, arroz, _, _), navio(_, _, _, verde, _), ListaSolucao),
-    
-    %O navio que vai para Santos sai às 5 da manhã.
-    member(navio(_, 5, _, _, santos), ListaSolucao),
-    
-    %O navio Espanhol sai às 7 da manhã e está à direita do navio que vai para Macau.
-    aDireita(navio(espanhol, 7, _, _, _), navio(_, _, _, _, macau), ListaSolucao),
-    
-    %O navio com a chaminé Vermelha vai para Hamburgo.
-    member(navio(_, _, _, vermelha, hamburgo), ListaSolucao),
-    
-    %O navio que sai às 7 da manhã está ao lado do navio que tem a chaminé Branca.
-    aoLado(navio(_, 7, _, _, _), navio(_, _, _, branca, _), ListaSolucao),
-    
-    %O navio do canto carrega Milho.
-    noCanto(navio(_, _, milho, _, _),ListaSolucao),
-    
-    %O navio com chaminé Preta sai às 8 da manhã
-    member(navio(_, 8, _, preta, _), ListaSolucao),
-    
-    %O navio que que carrega Milho está ancorado ao lado do navio que carrega Arroz.
-    aoLado(navio(_, _, milho, _, _), navio(_, _, arroz, _, _), ListaSolucao),
-    
-    %O navio que vai para Hamburgo sai às 6 da manhã.
-    member(navio(_, 6, _, _, hamburgo), ListaSolucao),
+    %O dono que está acompanhado da Irmã está ao lado do dono da camiseta Vermelha
+    aoLado(homem(_, _, _, irma, _, _), homem(vermelha, _, _, _, _, _), ListaSolucao),
+
+    %O Policial está em algum lugar à direita do rapaz de Azul
+    aDireita(homem(_, _, policial, _, _, _), homem(azul, _, _, _, _, _), ListaSolucao),
+
+    %Quem está com um Amigo está ao lado de quem está com a Irmã
+    aoLado(homem(_, _, _, amigo, _, _), homem(_, _, _, irma, _, _), ListaSolucao),
+
+    %Victor está ao lado do rapaz que está acompanhado da Mãe
+    aoLado(homem(victor, _, _, _, _, _), homem(_, _, _, mae, _, _), ListaSolucao),
+
+    %Sidney está em uma das pontas
+    noCanto(navio(sidney, _, _, _, _, _), ListaSolucao),
+
+    %O Mini porco está exatamente à direita do animal mais velho
+    aDireita(homem(_, _, _, _, mini_porco, _), homem(_, _, _, _, _, 5), ListaSolucao),
+
+    %O dono de camiseta Azul é Joalheiro
+    member(homem(azul, _, joalheiro, _, _, _), ListaSolucao)
+
+    %O Sociólogo está ao lado do dono que tem o animal mais novo
+    aoLado(homem(_, _, sociologo, _, _, _), homem(_, _, _, _, 1, _), ListaSolucao),
+
+    %Raphael está na quinta posição
+    Dono5 = raphael
+
+    %O Cachorro tem 4 anos
+    member(homem(_, _, _, _, cachorro, 4), ListaSolucao)
+
+    %Em uma das pontas está o homem que está acompanhado do Filho
+    noCanto(navio(_, _, _, filho, _, _), ListaSolucao),
+
+    %O Sociólogo está ao lado de quem está acompanhado do Filho
+    aoLado(homem(_, _, sociologo, _, _, _), homem(_, _, _, filho, _, _), ListaSolucao),
+
+    %Caio tem um Gato
+    member(homem(_, caio, _, _, gato, _), ListaSolucao)
+
+    %O rapaz de Azul está em algum lugar à esquerda do dono do animal de 5 anos
+    aEsquerda(homem(azul, _, _, _, _, _), homem(_, _, _, _, _, 5), ListaSolucao),
+
+    %O rapaz da camiseta Amarela está ao lado de quem está acompanhado da Mãe
+    aoLado(homem(amarela, _, _, _, _, _), homem(_, _, _, mme, _, _), ListaSolucao),
+
+    %O animal de 4 anos está na terceira posição
+    Idade3 = 4
+
+    %A Iguana tem 3 anos
+    member(homem(_, _, _, _, iguana, 3), ListaSolucao)
+
+    %O homem de Branco está exatamente à esquerda de Victor
+    aEsquerda(homem(branco, _, _, _, _, _), homem(_, victor, _, _, _, 5_), ListaSolucao),
+
+    %Na terceira posição está o dono que está acompanhado da Irmã
+    Companhia3 = irma
+
+    %O Designer tem uma Iguana
+    member(homem(_, _, designer, _, iguana, _), ListaSolucao)
+
+    %O Joalheiro e o Sociólogo estão lado a lado
+    %TODO
+
+    %O rapaz que está acompanhado da Mãe é dono do animal de 5 anos
+    member(homem(_, _, _, mae, _, 5), ListaSolucao)
+
     
     %Testa todas as possibilidades...
     camiseta(Camiseta1), camiseta(Camiseta2), camiseta(Camiseta3), camiseta(Camiseta4), camiseta(Camiseta5),
