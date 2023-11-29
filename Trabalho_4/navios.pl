@@ -5,13 +5,11 @@ camiseta(branca).
 camiseta(verde).
 camiseta(vermelha).
 
-
 dono(bruno).
 dono(caio).
 dono(raphael).
 dono(sidney).
 dono(victor).
-
 
 profissao(analista).
 profissao(designer).
@@ -19,13 +17,11 @@ profissao(joalheiro).
 profissao(policial).
 profissao(sociologo).
 
-
 companhia(amigo).
 companhia(esposa).
 companhia(filho).
 companhia(irma).
 companhia(mae).
-
 
 animal(cachorro).
 animal(furao).
@@ -33,13 +29,11 @@ animal(gato).
 animal(iguana).
 animal(mini_porco).
 
-
 idade(1).
 idade(2).
 idade(3).
 idade(4).
 idade(5).
-
 
 %X está à ao lado de Y
 aoLado(X,Y,Lista) :- nextto(X,Y,Lista);nextto(Y,X,Lista).
