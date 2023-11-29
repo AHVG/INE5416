@@ -62,7 +62,6 @@ todosDiferentes([H|T]) :- not(member(H,T)), todosDiferentes(T).
 solucao(ListaSolucao) :- 
 
     %Ver oq quer dizer exatamente a esquerda ou a direita
-    %Ver como fazer lado a lado
 
     ListaSolucao = [
         homem(Camiseta1, Dono1, Profissao1, Companhia1, Animal1, Idade1),
@@ -118,7 +117,7 @@ solucao(ListaSolucao) :-
     aEsquerda(homem(azul, _, _, _, _, _), homem(_, _, _, _, _, 5), ListaSolucao),
 
     %O rapaz da camiseta Amarela está ao lado de quem está acompanhado da Mãe
-    aoLado(homem(amarela, _, _, _, _, _), homem(_, _, _, mme, _, _), ListaSolucao),
+    aoLado(homem(amarela, _, _, _, _, _), homem(_, _, _, mae, _, _), ListaSolucao),
 
     %O animal de 4 anos está na terceira posição
     Idade3 = 4
@@ -136,11 +135,10 @@ solucao(ListaSolucao) :-
     member(homem(_, _, designer, _, iguana, _), ListaSolucao)
 
     %O Joalheiro e o Sociólogo estão lado a lado
-    %TODO
+    aoLado(homem(_, _, joalheiro, _, _, _), homem(_, _, sociologo, , _, _), ListaSolucao),
 
     %O rapaz que está acompanhado da Mãe é dono do animal de 5 anos
     member(homem(_, _, _, mae, _, 5), ListaSolucao)
-
     
     %Testa todas as possibilidades...
     camiseta(Camiseta1), camiseta(Camiseta2), camiseta(Camiseta3), camiseta(Camiseta4), camiseta(Camiseta5),
