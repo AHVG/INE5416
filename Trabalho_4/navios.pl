@@ -118,8 +118,8 @@ solucao(ListaSolucao) :-
     member(homem(_, _, _, _, iguana, 3), ListaSolucao),
 
     %O homem de Branco está exatamente à esquerda de Victor
-    aEsquerda(homem(branco, _, _, _, _, _), homem(_, victor, _, _, _, _), ListaSolucao),
-    aoLado(homem(branco, _, _, _, _, _), homem(_, victor, _, _, _, _), ListaSolucao),
+    aEsquerda(homem(branca, _, _, _, _, _), homem(_, victor, _, _, _, _), ListaSolucao),
+    aoLado(homem(branca, _, _, _, _, _), homem(_, victor, _, _, _, _), ListaSolucao),
 
     %Na terceira posição está o dono que está acompanhado da Irmã
     Companhia3 = irma,
@@ -131,7 +131,7 @@ solucao(ListaSolucao) :-
     aoLado(homem(_, _, joalheiro, _, _, _), homem(_, _, sociologo, _, _, _), ListaSolucao),
 
     %O rapaz que está acompanhado da Mãe é dono do animal de 5 anos
-    member(homem(_, _, _, mae, _, 5), ListaSolucao).
+    member(homem(_, _, _, mae, _, 5), ListaSolucao),
     
     %Testa todas as possibilidades...
     camiseta(Camiseta1), camiseta(Camiseta2), camiseta(Camiseta3), camiseta(Camiseta4), camiseta(Camiseta5),
