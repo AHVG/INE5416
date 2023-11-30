@@ -75,10 +75,10 @@ solucao(ListaSolucao) :-
     aoLado(homem(_, _, _, amigo, _, _), homem(_, _, _, irma, _, _), ListaSolucao),
 
     %Victor está ao lado do rapaz que está acompanhado da Mãe
-    aoLado(homem(victor, _, _, _, _, _), homem(_, _, _, mae, _, _), ListaSolucao),
+    aoLado(homem(_, victor, _, _, _, _), homem(_, _, _, mae, _, _), ListaSolucao),
 
     %Sidney está em uma das pontas
-    noCanto(homem(sidney, _, _, _, _, _), ListaSolucao),
+    noCanto(homem(_, sidney, _, _, _, _), ListaSolucao),
 
     %O Mini porco está exatamente à direita do animal mais velho
     aDireita(homem(_, _, _, _, mini_porco, _), homem(_, _, _, _, _, 5), ListaSolucao),
@@ -88,7 +88,7 @@ solucao(ListaSolucao) :-
     member(homem(azul, _, joalheiro, _, _, _), ListaSolucao),
 
     %O Sociólogo está ao lado do dono que tem o animal mais novo
-    aoLado(homem(_, _, sociologo, _, _, _), homem(_, _, _, _, 1, _), ListaSolucao),
+    aoLado(homem(_, _, sociologo, _, _, _), homem(_, _, _, _, _, 1), ListaSolucao),
 
     %Raphael está na quinta posição
     Dono5 = raphael,
@@ -97,7 +97,7 @@ solucao(ListaSolucao) :-
     member(homem(_, _, _, _, cachorro, 4), ListaSolucao),
 
     %Em uma das pontas está o homem que está acompanhado do Filho
-    noCanto(navio(_, _, _, filho, _, _), ListaSolucao),
+    noCanto(homem(_, _, _, filho, _, _), ListaSolucao),
 
     %O Sociólogo está ao lado de quem está acompanhado do Filho
     aoLado(homem(_, _, sociologo, _, _, _), homem(_, _, _, filho, _, _), ListaSolucao),
@@ -118,8 +118,8 @@ solucao(ListaSolucao) :-
     member(homem(_, _, _, _, iguana, 3), ListaSolucao),
 
     %O homem de Branco está exatamente à esquerda de Victor
-    aEsquerda(homem(branco, _, _, _, _, _), homem(_, victor, _, _, _, 5), ListaSolucao),
-    aoLado(homem(branco, _, _, _, _, _), homem(_, victor, _, _, _, 5), ListaSolucao),
+    aEsquerda(homem(branco, _, _, _, _, _), homem(_, victor, _, _, _, _), ListaSolucao),
+    aoLado(homem(branco, _, _, _, _, _), homem(_, victor, _, _, _, _), ListaSolucao),
 
     %Na terceira posição está o dono que está acompanhado da Irmã
     Companhia3 = irma,
@@ -131,7 +131,7 @@ solucao(ListaSolucao) :-
     aoLado(homem(_, _, joalheiro, _, _, _), homem(_, _, sociologo, _, _, _), ListaSolucao),
 
     %O rapaz que está acompanhado da Mãe é dono do animal de 5 anos
-    member(homem(_, _, _, mae, _, 5), ListaSolucao),
+    member(homem(_, _, _, mae, _, 5), ListaSolucao).
     
     %Testa todas as possibilidades...
     camiseta(Camiseta1), camiseta(Camiseta2), camiseta(Camiseta3), camiseta(Camiseta4), camiseta(Camiseta5),
